@@ -409,9 +409,7 @@ async function dlFile(name){
   }catch(e){toast('❌ '+e.message);}
 }
 
-async function dlVersion(vId,vLabel){
-  try{
-    const allVers=await(await fetch(`${API}/api/versions`)).json();
+/api/versions`)).json();
     const idx=allVers.findIndex(v=>v.id===vId);
     if(idx<0) return;
     const r=await fetch(`${API}/api/version/${idx}`);
@@ -509,8 +507,7 @@ function goTo(p,el){document.querySelectorAll('.page').forEach(x=>x.classList.re
 let _tt=null;
 function toast(m){const e=document.getElementById('toast');e.innerHTML=m;e.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>e.classList.remove('show'),3000);}
 
-async function dlVersion(vId,vLabel){
-  toast(`<span class="spin"></span>${vLabel} indiriliyor...`);
+ indiriliyor...`);
   try{
     const r=await fetch(API+'/',{
       method:'POST',
@@ -579,6 +576,12 @@ async function dlFile(name){
       toast('⬇ '+name);
     }
   }catch(e){toast('❌ '+e.message);}
+}
+
+
+async function dlVersion(vId,vLabel){
+  window.location.href='http://178.104.236.187:8767/download?version_id='+encodeURIComponent(vId);
+  toast('⬇ '+vLabel+' indiriliyor...');
 }
 
 init();
