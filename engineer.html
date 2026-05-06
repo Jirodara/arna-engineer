@@ -409,22 +409,7 @@ async function dlFile(name){
   }catch(e){toast('❌ '+e.message);}
 }
 
-/api/versions`)).json();
-    const idx=allVers.findIndex(v=>v.id===vId);
-    if(idx<0) return;
-    const r=await fetch(`${API}/api/version/${idx}`);
-    const d=await r.json();
-    if(!d.files) return;
-    let i=0;
-    for(const[n,c] of Object.entries(d.files)) setTimeout(()=>dl(n,c),i++*150);
-    toast(`⬇ ${vLabel} — ${Object.keys(d.files).length} dosya`);
-  }catch(e){toast('❌ '+e.message);}
-}
 
-async function dlAll(){
-  for(const name of (ST.files||[])) setTimeout(()=>dlFile(name),0);
-  toast(`⬇ ${ST.file_count} dosya`);
-}
 
 async function rmFile(name){
   if(!confirm(`"${name}" silinsin mi?`)) return;
@@ -507,82 +492,11 @@ function goTo(p,el){document.querySelectorAll('.page').forEach(x=>x.classList.re
 let _tt=null;
 function toast(m){const e=document.getElementById('toast');e.innerHTML=m;e.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>e.classList.remove('show'),3000);}
 
- indiriliyor...`);
-  try{
-    const r=await fetch(API+'/',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({action:'download_zip',version_id:vId})
-    });
-    if(r.ok){
-      const blob=await r.blob();
-      const u=URL.createObjectURL(blob);
-      const a=document.createElement('a');
-      a.href=u;
-      a.download='arna-'+vLabel+'.zip';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(u);
-      toast('✅ '+vLabel+' ZIP indirildi');
-    }else{
-      toast('❌ Sunucu hatası: '+r.status);
-    }
-  }catch(e){
-    toast('❌ '+e.message);
-  }
-}
-
-async function dlAll(){
-  toast(`<span class="spin"></span>Tüm dosyalar indiriliyor...`);
-  try{
-    const r=await fetch(API+'/',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({action:'download_zip',version_id:''})
-    });
-    if(r.ok){
-      const blob=await r.blob();
-      const u=URL.createObjectURL(blob);
-      const a=document.createElement('a');
-      a.href=u;
-      a.download='arna-latest.zip';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(u);
-      toast('✅ Tüm dosyalar ZIP indirildi');
-    }else{
-      toast('❌ Sunucu hatası');
-    }
-  }catch(e){
-    toast('❌ '+e.message);
-  }
-}
-
-async function dlFile(name){
-  try{
-    const r=await fetch(API+'/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_file',name})});
-    const d=await r.json();
-    if(d.ok){
-      const b=new Blob([d.content],{type:'text/plain'});
-      const u=URL.createObjectURL(b);
-      const a=document.createElement('a');
-      a.href=u;a.download=name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(u);
-      toast('⬇ '+name);
-    }
-  }catch(e){toast('❌ '+e.message);}
-}
 
 
-async function dlVersion(vId,vLabel){
-  window.location.href='http://178.104.236.187:8767/download?version_id='+encodeURIComponent(vId);
-  toast('⬇ '+vLabel+' indiriliyor...');
-}
+
+
+
 
 init();
 </script>
