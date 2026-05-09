@@ -421,8 +421,9 @@ async function loadSecrets(){
 async function reload(){
   try{
     const r = await fetch(`${API}/api/state`);
-    if(r.ok){ ST = await r.json(); render(); setConn(true); }
-  }catch(e){ setConn(false); }
+    if(r.ok){ ST = await r.json(); render(); setConn(true); alert('Dosya: '+(ST.files||[]).length); }
+    else{ setConn(false); alert('HTTP hata: '+r.status); }
+  }catch(e){ setConn(false); alert('Fetch hata: '+e.message); }
 }
 
 function setConn(ok){
@@ -655,7 +656,7 @@ async function showDiff(newId, oldId, label){
   }catch(e){ toast('❌ '+e.message); }
 }
 
-
+async function applyFix(name){
   try{
     const r=await fetch(`${API}/`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'apply_fix',name})});
     const d=await r.json();
