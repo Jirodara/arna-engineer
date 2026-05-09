@@ -788,8 +788,8 @@ function render(){
       <div class="vfiles">${ch}${ad}</div>
       <div class="vbtns">
         <button class="vbtn dl" onclick="dlVersion('${ver.id}','${ver.label}')">⬇ İndir</button>
-        <button class="vbtn" style="background:var(--purple);color:#fff" <button class="vbtn" style="background:var(--ink2);color:var(--dim);border:1px solid rgba(255,255,255,.1)" onclick="window.open(API+'/download?version_id=${ver.id}','_blank')">📦 ZIP</button>
-        onclick="pushVersion('${ver.id}')">🐙 Push</button>
+        <button class="vbtn" style="background:var(--ink2);color:var(--dim);border:1px solid rgba(255,255,255,.1)" onclick="window.open(API+'/download?version_id=${ver.id}','_blank')">📦 ZIP</button>
+        <button class="vbtn" style="background:var(--purple);color:#fff" onclick="pushVersion('${ver.id}')">🐙 Push</button>
         ${!ic?`<button class="vbtn re" onclick="restoreVersion('${ver.id}','${ver.label}')">↩ Geri Dön</button>`:''}
         ${idx<versions.length-1?('<button class="vbtn" style="background:var(--ink2);color:var(--dim);border:1px solid var(--line)" onclick="showDiff(\''+ver.id+'\',\''+((versions[idx+1]||{}).id||'')+'\',\''+ver.label+'\')">🔍 Fark</button>'):''}
       </div>
