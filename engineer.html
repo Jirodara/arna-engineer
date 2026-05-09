@@ -421,9 +421,9 @@ async function loadSecrets(){
 async function reload(){
   try{
     const r = await fetch(`${API}/api/state`);
-    if(r.ok){ ST = await r.json(); render(); setConn(true); alert('Dosya: '+(ST.files||[]).length); }
-    else{ setConn(false); alert('HTTP hata: '+r.status); }
-  }catch(e){ setConn(false); alert('Fetch hata: '+e.message); }
+    if(r.ok){ ST = await r.json(); render(); setConn(true); }
+    else{ setConn(false); }
+  }catch(e){ setConn(false); }
 }
 
 function setConn(ok){
